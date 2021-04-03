@@ -11,6 +11,15 @@
 <body>
     <form id="form1" runat="server" >
     
+    Pilih Form Materi
+    <asp:DropDownList ID="pilihmetode" runat="server" AutoPostBack="true">
+            <asp:ListItem Value="">-- Pilih Materi --</asp:ListItem>
+            <asp:ListItem Value="1">Form Nilai</asp:ListItem>    
+            <asp:ListItem Value="2">Form Segitiga</asp:ListItem>    
+            <asp:ListItem Value="3">Form Biodata Mahasiswa</asp:ListItem>
+            <asp:ListItem Value="4">View Data Mahasiswa</asp:ListItem>
+    </asp:DropDownList>
+    
     <div id="divNilai" runat="server" visible="false">
         <br />
         Nilai 1: 
@@ -74,6 +83,21 @@
                 <br />
                 <asp:Label ID="feedSoal" runat="server" />
         </div>
+
+    <div id="formtabel" runat="server">
+        <table cellspacing="1" class="tb blue-skin">
+            <tr align="left" valign="bottom">
+                <th>No. </th>
+                <th width="150">NIM /<br />
+                    Nama Mahasiswa</th>
+                <th width="100">Tempat / Tgl.Lahir</th>
+                <th>Kelas</th>
+                <th>Alamat</th>
+                <th>Kota</th>
+            </tr>
+            <asp:PlaceHolder ID="list" runat="server"></asp:PlaceHolder>
+        </table>
+    </div>
     
 </form> 
 </body>
