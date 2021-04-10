@@ -33,4 +33,20 @@ public class ClassConfig
 
         return rst;
     }
+
+    //Untuk Eksekusi ke database
+    public static void Eksekusi(string strSql)
+    {
+        Eksekusi(strSql, CnnString);
+    }
+
+    public static void Eksekusi(string strSql, string Conn)
+    {
+        MySqlConnection sqlCnn = new MySqlConnection(Conn);
+        MySqlCommand sqlCmd = new MySqlCommand(strSql, sqlCnn);
+        sqlCnn.Open();
+        sqlCmd.ExecuteNonQuery();
+        sqlCnn.Close();
+    }
+
 }

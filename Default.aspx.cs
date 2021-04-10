@@ -12,6 +12,7 @@ public partial class _Default : System.Web.UI.Page
         if (!IsPostBack)
         {
             Kelas(jurusan);
+            Kelas(ddlKelas);
         }
 
         divNilai.Visible = false;
@@ -129,7 +130,7 @@ public partial class _Default : System.Web.UI.Page
             var data = sql.Rows[i];
 
             string TTL = data["TempatLahir"].ToString();
-            TTL += ",<br/> " + Convert.ToDateTime(data["TglLahir"]).ToString("dd-MM-yy");
+            TTL += ",<br/> " + Convert.ToDateTime(data["TglLahir"]).ToString("dd-MM-yyyy");
             
             b++;
             Label l;
@@ -181,4 +182,32 @@ public partial class _Default : System.Web.UI.Page
     }
 
 
+    protected void save_Click(object sender, EventArgs e)
+    {
+        string Nim = txtNim.Text;
+        string Nama = txtNamaMhs.Text;
+        string Kelas = ddlKelas.SelectedValue;
+        string Kota = txtKotaMhs.Text;
+        string Alamat = txtAlamatMhs.Text;
+        string TempatLahir = txtTempatLahir.Text;
+        string TglLahir = Convert.ToDateTime(txtTglLahir.Text).ToString("yyyy-MM-dd");
+        string TipeKelas = rbKelas.SelectedValue;
+        
+        ClassConfig.Eksekusi("INSERT INTO biodata "
+                            + " (Nim, Nama, Kelas, Kota, Alamat, TempatLahir, TglLahir, TipeKelas) "
+                            + "   VALUES ("
+                            + "'" + Nim + "'"
+                            + ",'" + Nama + "'"
+                            + ",'" + Kelas + "'"
+                            + ",'" + Kota + "'"
+                            + ",'" + Alamat + "'"
+                            + ",'" + TempatLahir + "'"
+                            + ",'" + TglLahir + "'"
+                            + ",'" + TipeKelas + "'"
+                            + ");");
+
+        Response.Redirect("Default.aspx?done=1");
+
+    }
+    
 }

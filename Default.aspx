@@ -5,8 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-  
+      <%--tambahkan css--%>
+      <link href="assets/style.css" rel="stylesheet" type="text/css" />  
 </head>
 <body>
     <form id="form1" runat="server" >
@@ -85,6 +85,74 @@
         </div>
 
     <div id="formtabel" runat="server">
+        <br />
+        <table cellspacing="1">
+            <tr align="left" valign="bottom">
+                <td style="width: 30%;">NIM</td>
+                <td style="width: 1%;">:</td>
+                <td>
+                    <asp:TextBox ID="txtNim" runat="server" Width="100%" CssClass="txt" />
+                </td>
+            </tr>
+            <tr align="left" valign="bottom">
+                <td style="width: 30%;">Nama</td>
+                <td style="width: 1%;">:</td>
+                <td>
+                    <asp:TextBox ID="txtNamaMhs" runat="server" Width="100%" CssClass="txt" />
+                </td>
+            </tr>
+            <tr align="left" valign="bottom">
+                <td style="width: 30%;">Tempat / 
+                    Tgl Lahir</td>
+                <td style="width: 1%;">:</td>
+                <td>
+                    <asp:TextBox ID="txtTempatLahir" runat="server" Width="100%" CssClass="txt" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>
+                    Tanggal
+                    &nbsp;
+                    <asp:TextBox ID="txtTglLahir" runat="server" CssClass="txt" textmode="Date" />
+                </td>
+            </tr>
+            <tr>
+                <td>Kelas
+                </td>
+                <td>:</td>
+                <td>
+                    <asp:DropDownList ID="ddlKelas" runat="server" Width="100%" CssClass="ddl">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>
+                    <asp:RadioButtonList ID="rbKelas" runat="server" CssClass="rbl">
+                        <asp:ListItem Value="Reguler">Reguler</asp:ListItem>
+                        <asp:ListItem Value="Karyawan">Karyawan</asp:ListItem>
+                    </asp:RadioButtonList>
+                </td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>
+                    <asp:TextBox ID="txtAlamatMhs" runat="server" Width="100%" Height="50" TextMode="MultiLine" />
+                </td>
+            </tr>
+            <tr>
+                <td>Kota</td>
+                <td>:</td>
+                <td>
+                    <asp:TextBox ID="txtKotaMhs" runat="server" Width="100%" /></td>
+            </tr>
+        </table>
+        <br />
+        <asp:LinkButton ID="save" runat="server" Width="75" CssClass="btn btn-orange" OnClick="save_Click">Simpan</asp:LinkButton>
+        
+        <br /><br />
         <table cellspacing="1" class="tb blue-skin">
             <tr align="left" valign="bottom">
                 <th>No. </th>
