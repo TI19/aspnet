@@ -7,7 +7,6 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Fill();
 
         if (!IsPostBack)
         {
@@ -33,6 +32,16 @@ public partial class _Default : System.Web.UI.Page
             formMhs.Visible = true;
         }
         else if (pilihmetode.Text == "4")
+        {
+            formtabel.Visible = true;
+        }
+
+        Fill();
+
+        //Tambahkan
+        if (Request.QueryString["nomor"] != null
+            || Request.QueryString["del"] != null
+            || Request.QueryString["done"] != null)
         {
             formtabel.Visible = true;
         }
@@ -119,6 +128,49 @@ public partial class _Default : System.Web.UI.Page
     {
         list.Controls.Clear();
 
+        if (Request.QueryString["nomor"] != null)
+        {
+            if (Request.QueryString["del"] != null)
+            {
+                ClassConfig.Eksekusi("DELETE FROM biodata "
+                                  + " WHERE MhsId = '" + Request.QueryString["nomor"] + "' ");
+                Response.Redirect("Default.aspx?done=3");
+            }
+
+            DataTable sqlEdit = 
+                ClassConfig.Call("SELECT * FROM biodata "
+                               + " WHERE MhsId = " + Request.QueryString["nomor"]);
+
+            for (int i = 0; i < sqlEdit.Rows.Count; i++)
+            {
+                if (!Response.IsClientConnected) break;
+
+                var Edit = sqlEdit.Rows[i];
+
+                if (!this.IsPostBack)
+                {
+                    txtNim.Text = Edit["Nim"].ToString();
+                    txtNamaMhs.Text = Edit["Nama"].ToString();
+                    ddlKelas.SelectedValue = Edit["Kelas"].ToString();
+                    txtAlamatMhs.Text = Edit["Alamat"].ToString();
+                    txtKotaMhs.Text = Edit["Kota"].ToString();
+                    txtTempatLahir.Text = Edit["TempatLahir"].ToString();
+                    txtTglLahir.Text = Convert.ToDateTime(Edit["TglLahir"]).ToString("yyyy-MM-dd");
+                    rbKelas.SelectedValue = Edit["TipeKelas"].ToString();
+                }
+            }
+
+            formtabel.Visible = true;
+            save.Visible = false;
+            edit.Visible = true;
+
+        }
+        else
+        {
+            save.Visible = true;
+            edit.Visible = false;
+        }
+
         int b = 0;
 
         DataTable sql = ClassConfig.Call("SELECT * FROM biodata");
@@ -177,6 +229,27 @@ public partial class _Default : System.Web.UI.Page
             c.Controls.Add(l);
             r.Cells.Add(c);
 
+            //tambah
+            c = new HtmlTableCell();
+            btn = new HtmlInputButton();
+            c.Attributes["Style"] = "width:100%;";
+            btn.Value = "Edit";
+            btn.Attributes["onclick"] = "popEdit(" + data["MhsId"].ToString() + ")";
+            btn.Attributes["class"] = "btn btn-blue";
+            btn.Attributes["Style"] = "width:100%; height: 30px; padding:5px;";
+            c.Controls.Add(btn);
+            r.Cells.Add(c);
+
+            c = new HtmlTableCell();
+            btn = new HtmlInputButton();
+            c.Attributes["Style"] = "width:100%;";
+            btn.Value = "Hapus";
+            btn.Attributes["onclick"] = "popHapus(" + data["MhsId"].ToString() + ")";
+            btn.Attributes["class"] = "btn btn-red";
+            btn.Attributes["Style"] = "width:100%; height: 30px; padding:5px;";
+            c.Controls.Add(btn);
+            r.Cells.Add(c);
+
             list.Controls.Add(r);
         }
     }
@@ -209,5 +282,31 @@ public partial class _Default : System.Web.UI.Page
         Response.Redirect("Default.aspx?done=1");
 
     }
+
+
+    protected void edit_Click(object sender, EventArgs e)
+    {
+        string IdMhs = Request.QueryString["nomor"];
+        string Nama = txtNamaMhs.Text;
+        string Kelas = ddlKelas.SelectedValue;
+        string Alamat = txtAlamatMhs.Text;
+        string Kota = txtKotaMhs.Text;
+        string TempatLahir = txtTempatLahir.Text;
+        string TglLahir = Convert.ToDateTime(txtTglLahir.Text).ToString("yyyy-MM-dd");
+        string TipeKelas = rbKelas.SelectedValue;
+
+        ClassConfig.Eksekusi("UPDATE biodata SET "
+                            + " Nama = '" + Nama + "'"
+                            + ",Kelas = '" + Kelas + "'"
+                            + ",Kota = '" + Kota + "'"
+                            + ",Alamat = '" + Alamat + "'"
+                            + ",TempatLahir = '" + TempatLahir + "'"
+                            + ",TglLahir = '" + TglLahir + "'"
+                            + ",TipeKelas = '" + TipeKelas + "'"
+                            + " WHERE MhsId = '" + IdMhs + "';");
+
+        Response.Redirect("Default.aspx?done=2");
+    }
+
     
 }

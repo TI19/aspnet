@@ -114,7 +114,7 @@
                 <td>
                     Tanggal
                     &nbsp;
-                    <asp:TextBox ID="txtTglLahir" runat="server" CssClass="txt" textmode="Date" />
+                    <asp:TextBox ID="txtTglLahir" runat="server" CssClass="txt" textMode="Date" />
                 </td>
             </tr>
             <tr>
@@ -150,18 +150,24 @@
             </tr>
         </table>
         <br />
-        <asp:LinkButton ID="save" runat="server" Width="75" CssClass="btn btn-orange" OnClick="save_Click">Simpan</asp:LinkButton>
-        
+        <asp:LinkButton ID="save" runat="server" Width="75" CssClass="btn btn-orange" 
+            OnClick="save_Click">Simpan</asp:LinkButton>
+        &nbsp;
+        <%--Tambahkan--%>
+        <asp:LinkButton ID="edit" runat="server" Width="75" CssClass="btn btn-blue" 
+            OnClick="edit_Click" >Update</asp:LinkButton>
+        &nbsp;
         <br /><br />
-        <table cellspacing="1" class="tb blue-skin">
+        <table cellspacing="1" class="tb blue-skin" width="100%">
             <tr align="left" valign="bottom">
-                <th>No. </th>
-                <th width="150">NIM /<br />
+                <th width="5%">No. </th>
+                <th width="30%">NIM /<br />
                     Nama Mahasiswa</th>
-                <th width="100">Tempat / Tgl.Lahir</th>
+                <th width="25%">Tempat / Tgl.Lahir</th>
                 <th>Kelas</th>
-                <th>Alamat</th>
-                <th>Kota</th>
+                <th width="30%">Alamat</th>
+                <th width="15%">Kota</th>
+                <th width="15%" colspan="2">Aksi</th>
             </tr>
             <asp:PlaceHolder ID="list" runat="server"></asp:PlaceHolder>
         </table>
@@ -169,4 +175,16 @@
     
 </form> 
 </body>
+<script type="text/javascript">
+    function popEdit(nomor) {
+        self.location.assign("/Default.aspx?nomor=" + nomor);
+    }
+
+    function popHapus(nomor) {
+        if (confirm('Apa Anda Yakin ingin menghapus data ini?')) {
+            self.location.assign("/Default.aspx?del=1&nomor=" + nomor);
+        }
+
+    }
+</script>
 </html>
